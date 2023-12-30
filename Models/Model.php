@@ -69,10 +69,11 @@ class Model implements CrudInterface
 
     public function findById($id)
     {
-        $query = "SELECT * FROM tabel WHERE id=:id";
-        $stmt = $this->conn->query($query);
+        $query = "SELECT * FROM {$this->table} WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        return $stmt->fetch();
     }
 
     public function findAll()
@@ -89,5 +90,6 @@ class Model implements CrudInterface
         $stmt = $this->conn->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 }
 ?>

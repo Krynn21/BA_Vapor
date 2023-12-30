@@ -7,8 +7,8 @@
         </button>
     </div>
     <!-- Tabel Produk -->
-    <div class="bg-white overflow-hidden shadow-md rounded-lg w-auto">
-        <table class="w-full table-fixed" id="table_produk">
+    <div class="bg-white overflow-hidden shadow-md rounded-lg w-auto" style="overflow-x:auto;">
+        <table class="w-full lg:table-fixed" id="table_produk">
             <thead class="">
                 <tr class="">
                     <th scope="col" class="w-2 py-4 px-6 text-left text-gray-600 text-sm font-bold uppercase">ID</th>
@@ -113,80 +113,107 @@
             success: function (response) {
 
                 $(".produk-tambah").on("click", function () {
-                    $("#modal-header").text("Tambah Produk");
-                    $("#modal-content").html(`
+                    $.ajax({
+                        url: '/api/kategoris',
+                        type: 'GET',
+                        success: function (response) {
+                            $("#modal-header").text("Tambah Produk");
+                            $("#modal-content").html(`
           <input type="hidden" name="id">
           <div class="grid gap-4 mb-4 grid-cols-2">
             <div class="col-span-2">
-            <label for="nama_produk" class="block mb-2 text-sm font-bold text-gray-900">Kategori</label>
-              <input type="text" name="nama_produk" id="nama_produk"
-                class="bg-gray-800 border border-gray-300 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                placeholder="Nama Produk" required="">
-              <label for="nama_produk" class="block mb-2 text-sm font-bold text-gray-900">Nama
+            <label for="nama_kategori" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori</label>
+            <select class="bg-gray-800 border border-gray-300 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" id="kategori_select" name="kategori_id"
+                                aria-label="Kategori Select">
+                            </select>
+                            <label for= "nama_produk" class= "block mb-2 text-sm font-bold text-gray-900" > Nama
                 Produk</label>
 
-              <input type="text" name="nama_produk" id="nama_produk"
-                class="bg-gray-800 border border-gray-300 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                placeholder="Nama Produk" required="">
+                        <input type="text" name="nama_produk" id="nama_produk"
+                            class="bg-gray-800 border border-gray-300 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            placeholder="Nama Produk" required="">
 
 
-                <label for="nama_produk" class="block pt-5 mb-2 text-sm font-bold text-gray-900">Harga</label>
-              <input type="text" name="harga" id="harga"
-                class="bg-gray-800 border border-gray-300 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                placeholder="Harga" required="">
+                            <label for="nama_produk" class="block pt-5 mb-2 text-sm font-bold text-gray-900">Harga</label>
+                            <input type="text" name="harga" id="harga"
+                                class="bg-gray-800 border border-gray-300 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                placeholder="Harga" required="">
 
-                <label for="deskripsi" class="block pt-5 mb-2 text-sm font-bold text-gray-900">Deskripsi</label>
-              <input type="" name="deskripsi" id="deskripsi"
-                class="bg-gray-800 border border-gray-300 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                placeholder="Deskripsi" required="">
+                                <label for="deskripsi" class="block pt-5 mb-2 text-sm font-bold text-gray-900">Deskripsi</label>
+                                <input type="" name="deskripsi" id="deskripsi"
+                                    class="bg-gray-800 border border-gray-300 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    placeholder="Deskripsi" required="">
 
-                <label for="photo" class=" mt-5 block mb-2 text-sm font-bold text-gray-900">Upload Photo</label>
-                <input type="file" name="photo" id="photo"
-                class="bg-gray-800 border border-gray-300 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                required="">
-            </div>  
-          </div>
-        `);
-                    $("#submit").html("Simpan");
-                    $("form").attr("action", "produk/save");
+                                    <label for="photo" class=" mt-5 block mb-2 text-sm font-bold text-gray-900">Upload Photo</label>
+                                    <input type="file" name="photo" id="photo"
+                                        class="bg-gray-800 border border-gray-300 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                        required="">
+                                    </div>
+                                </div>
+                                `);
+                            $("#submit").html("Simpan");
+                            $("form").attr("action", "produk/save");
+                            let kategoriSelect = $('#kategori_select');
+                            kategoriSelect.empty();
+                            kategoriSelect.append('<option>Pilih Kategori</option>');
+
+                            response.forEach(function (kategori) {
+                                kategoriSelect.append(`<option value="${kategori.id}">${kategori.nama_kategori}</option>`);
+                            });
+                        }
+                    });
                 });
                 $(".produk-edit").on("click", function () {
                     const userId = $(this).data('bs-id');
-                    const produk = response.find(item => item.id === userId);
-                    $("#modal-header").text("Edit Produk");
-                    $("#modal-content").html(`
-            <input type="hidden" name="id" value="${produk.id}">
-            <div class="grid gap-4 mb-4 grid-cols-2">
-              <div class="col-span-2">
-              <label for="nama_produk" class="block mb-2 text-sm font-bold text-gray-800 ">Kategori</label>
-                <input type="text" name="nama_produk" id="nama_produk"
-                  class="bg-gray-800 border border-gray-300 text-gray-100 text-sm rounded-lg  block w-full p-2.5"
-                  placeholder="Nama Produk" required="" value="${produk.nama_produk}">
-                <label for="nama_produk" class="block mb-2 text-sm font-bold text-gray-800 ">Nama
-                  Produk</label>
-                <input type="text" name="nama_produk" id="nama_produk"
-                  class="bg-gray-800 border border-gray-300 text-gray-100 text-sm rounded-lg  block w-full p-2.5"
-                  placeholder="Nama Produk" required="" value="${produk.nama_produk}">
+                    $.ajax({
+                        url: '/api/kategoris',
+                        type: 'GET',
+                        success: function (responses) {
 
-                  <label for="harga" class="block pt-3 mb-2 text-sm font-bold text-gray-800 ">Harga</label>
-                <input type="text" name="harga" id="harga"
-                  class="bg-gray-800 border border-gray-300 text-gray-100 text-sm rounded-lg  block w-full p-2.5"
-                  placeholder="Harga" required="" value="${produk.harga}">
+                            const produk = response.find(item => item.id === userId);
+                            console.log(produk)
+                            $("#modal-header").text("Edit Produk");
+                            $("#modal-content").html(`
+                    <label for="nama_produk" class="block mb-2 text-sm font-bold text-gray-900">Kategori</label>
+                        <select class="bg-gray-800 border border-gray-300 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" id="kategori_select" name="kategori_id"
+                                aria-label="Kategori Select" >
+                            </select>
+                                <input type="hidden" name="id" value="${produk.id}">
+                                    <div class="grid gap-4 mb-4 grid-cols-2">
+                                        <div class="col-span-2">
+                                                <label for="nama_produk" class="block mb-2 text-sm font-bold text-gray-800 ">Nama
+                                                    Produk</label>
+                                                <input type="text" name="nama_produk" id="nama_produk"
+                                                    class="bg-gray-800 border border-gray-300 text-gray-100 text-sm rounded-lg  block w-full p-2.5"
+                                                    placeholder="Nama Produk" required="" value="${produk.nama_produk}">
 
-                  <label for="deskripsi" class="block pt-3 mb-2 text-sm font-bold text-gray-800 ">Deskripsi</label>
-                <input type="text" name="deskripsi" id="deskripsi"
-                  class="bg-gray-800 border border-gray-300 text-gray-100 text-sm rounded-lg  block w-full p-2.5"
-                  placeholder="deskripsi" required="" value="${produk.deskripsi}">
+                                                    <label for="harga" class="block pt-3 mb-2 text-sm font-bold text-gray-800 ">Harga</label>
+                                                    <input type="text" name="harga" id="harga"
+                                                        class="bg-gray-800 border border-gray-300 text-gray-100 text-sm rounded-lg  block w-full p-2.5"
+                                                        placeholder="Harga" required="" value="${produk.harga}">
 
-                  <label for="photo" class="block pt-3 mb-2 text-sm font-bold text-gray-800 ">Ganti Photo</label>
-                <input type="file" name="photo" id="photo"
-                  class="bg-gray-800 border border-gray-300 text-gray-100 text-sm rounded-lg  block w-full p-2.5"
-                  placeholder="photo" required="" value="${produk.photo}">
-              </div>
-            </div>
-          `);
-                    $("#submit").html("Update");
-                    $("form").attr("action", "produk/update");
+                                                        <label for="deskripsi" class="block pt-3 mb-2 text-sm font-bold text-gray-800 ">Deskripsi</label>
+                                                        <input type="text" name="deskripsi" id="deskripsi"
+                                                            class="bg-gray-800 border border-gray-300 text-gray-100 text-sm rounded-lg  block w-full p-2.5"
+                                                            placeholder="deskripsi" required="" value="${produk.deskripsi}">
+
+                                                            <label for="photo" class="block pt-3 mb-2 text-sm font-bold text-gray-800 ">Ganti Photo</label>
+                                                            <input type="file" name="photo" id="photo"
+                                                                class="bg-gray-800 border border-gray-300 text-gray-100 text-sm rounded-lg  block w-full p-2.5"
+                                                                placeholder="photo" value="${produk.photo}">
+                                                            </div>
+                                                        </div>
+                                                        `);
+                            $("#submit").html("Update");
+                            $("form").attr("action", "produk/update");
+                            let kategoriSelect = $('#kategori_select');
+                            kategoriSelect.empty();
+                            responses.forEach(function (kategori) {
+                                kategoriSelect.append(`<option value="${kategori.id}"  ${kategori.id == produk.kategori_id ? 'selected' : ''} >${kategori.nama_kategori}</option>`);
+                            });
+                        }
+                    });
+
                 });
 
                 $(".produk-delete").on("click", function () {

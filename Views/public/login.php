@@ -10,14 +10,14 @@
                     Username
                 </label>
                 <input id="username" name="username" type="text"
-                    class=" w-full px-4 py-2 rounded-lg border border-gray-400">
+                    class=" w-full px-4 py-2 rounded-lg border border-gray-400" required>
             </div>
             <div>
                 <label class="block text-gray-700 font-bold mb-2" for="password">
                     Password
                 </label>
                 <input id="password" name="password" type="password"
-                    class="w-full px-4 py-2 rounded-lg border border-gray-400">
+                    class="w-full px-4 py-2 rounded-lg border border-gray-400" required>
             </div>
             <div class="flex justify-around">
                 <div class="">

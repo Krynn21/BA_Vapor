@@ -117,7 +117,7 @@
 
         <a class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl " href="#"
           id="produk">
-          Produk Unggulan
+          Produk Terbaru
         </a>
 
         <div class="flex items-center" id="store-nav-content">
@@ -140,10 +140,10 @@
         </div>
       </div>
     </nav>
-    <?php foreach ($produks as $produk) { ?>
+    <?php foreach ($produkbaru as $produk) { ?>
       <div class=" w-1/2 md:w-1/4 xl:w-1/4 p-6 flex flex-col rounded-lg shadow-xl" data-aos="zoom-in"
         data-aos-duration="500" data-aos-delay="400">
-        <a href="#">
+        <a href="/detailproduk/<?= $produk['id'] ?>">
           <img class=" hover:grow hover:shadow-2xl rounded-lg" src="assets/images/produk/<?= $produk['photo'] ?>">
           <div class="pt-3 flex items-center justify-between">
             <p class="">
@@ -199,7 +199,7 @@
     <?php foreach ($produks as $produk): ?>
       <div class="w-1/2 md:w-1/4 xl:w-1/4 p-6 flex flex-col rounded-lg shadow-xl" data-aos="zoom-in"
         data-aos-duration="500" data-aos-delay="400">
-        <a href="#">
+        <a href="/detailproduk/<?= $produk['id'] ?>">
           <img class=" hover:grow hover:shadow-2xl rounded-lg" src="assets/images/produk/<?= $produk['photo'] ?>">
           <div class="pt-3 flex items-center justify-between">
             <p class="">

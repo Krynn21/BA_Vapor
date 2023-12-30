@@ -10,7 +10,7 @@
         </svg>
       </label>
       <div class="order-1 md:order-2">
-        <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
           <img src="../assets/images/logo/logovapor.png" class="h-16" alt="Flowbite Logo">
         </a>
       </div>

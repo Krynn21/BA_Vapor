@@ -12,6 +12,8 @@ class Routes
             '/registerUser' => 'AuthController@registerUser',
             '/register' => 'AuthController@registrationForm',
             '/dashboard' => 'DashboardController@index',
+            '/detailproduk/(\d+)' => 'HomeController@detail',
+
 
             //Dashboard User
             '/dashboard/users' => 'UserController@index',

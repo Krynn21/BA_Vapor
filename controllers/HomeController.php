@@ -22,13 +22,22 @@ class HomeController
             $kategoris = $kategoriModel->findAll();
 
             $produkModel = new Produk();
+            $latestProduks = $produkModel->getprodukbaru();
             $produks = $produkModel->findAll();
-            view("public/index", ['produks' => $produks, 'kategoris' => $kategoris]);
+            view("public/index", ['produks' => $produks, 'produkbaru' => $latestProduks, 'kategoris' => $kategoris]);
         }
     }
     public function profile()
     {
         view("public/profile");
     }
+
+    public function detail($id)
+    {
+        $produkModel = new Produk();
+        $produk = $produkModel->findById($id);
+        view("public/detailproduk", ['produk' => $produk]);
+    }
+
 }
 ?>
